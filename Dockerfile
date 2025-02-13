@@ -37,6 +37,6 @@ WORKDIR /app
 COPY --from=build-backend /app/bin/go /usr/bin/go
 
 VOLUME /app/data
-EXPOSE 8080
+EXPOSE 1323
 
 CMD ["/usr/bin/go"]

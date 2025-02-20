@@ -18,12 +18,13 @@ func (c *Config) GetDb() *gorm.DB {
 
 	if c.DB == nil {
 		dsn := fmt.Sprintf(
-			"host=%s user=%s password=%s port=%s sslmode=disable TimeZone=%s",
+			"host=%s user=%s password=%s port=%s sslmode=disable TimeZone=%s dbname=%s",
 			os.Getenv("POSTGRES_HOST"),
 			os.Getenv("POSTGRES_USER"),
 			os.Getenv("POSTGRES_PASS"),
 			os.Getenv("POSTGRES_PORT"),
 			os.Getenv("POSTGRES_TIME"),
+			os.Getenv("POSTGRES_DBNAME"),
 		)
 
 		db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})

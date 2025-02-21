@@ -44,8 +44,6 @@ func main() {
 	api.POST("/save", saveUser)
 	api.GET("/users/:id", getUser)
 	api.GET("/users/show", show)
-	// e.PUT("/users/:id", updateUser)
-	// e.DELETE("/users/:id", deleteUser)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

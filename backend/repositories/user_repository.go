@@ -51,6 +51,10 @@ func (r *UserRepository) GetAll(page, limit int, name, role, email string) ([]mo
 	return users, int(total), nil
 }
 
+func (r *UserRepository) GetById(id uint) error {
+	return r.db.GetDb().Find(&models.User{}, id).Error
+}
+
 func (r *UserRepository) Create(user *models.User) error {
 	return r.db.GetDb().Create(user).Error
 }

@@ -22,17 +22,17 @@ const (
 )
 
 type User struct {
-	ID         uuid.UUID  `gorm:"primaryKey;type:uuid;default:uuid_generate_v4()"`
-	Name       string     `json:"name"`
-	Email      string     `json:"email" gorm:"unique"`
-	Password   string     `json:"password"`
-	Role       Role       `json:"role" gorm:"default:ROLE_USER"`
-	UserStatus UserStatus `json:"status" gorm:"default:ACTIVE"`
-	Phone      string     `json:"phone"`
-	Code       string     `json:"code"`
-	CreatedAt  time.Time
-	UpdatedAt  time.Time
-	DeletedAt  gorm.DeletedAt `gorm:"index"`
+	ID        uuid.UUID  `gorm:"primaryKey;type:uuid;default:uuid_generate_v4()"`
+	Name      string     `json:"name"`
+	Email     string     `json:"email" gorm:"unique"`
+	Password  string     `json:"password"`
+	Role      Role       `json:"role" gorm:"default:ROLE_USER"`
+	Status    UserStatus `json:"status" gorm:"default:ACTIVE"`
+	Phone     string     `json:"phone"`
+	Code      string     `json:"code"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 type RegisterUserRequest struct {
@@ -45,4 +45,10 @@ type RegisterUserRequest struct {
 type LoginUserRequest struct {
 	Email    string `validate:"required"`
 	Password string `validate:"required"`
+}
+
+type UpdateUserRequest struct {
+	Name   string `json:"name"`
+	Status string `json:"status"`
+	Role   string `json:"role"`
 }

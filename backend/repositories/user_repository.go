@@ -3,6 +3,8 @@ package repositories
 import (
 	"absensi-app/backend/configs"
 	"absensi-app/backend/models"
+
+	"github.com/google/uuid"
 )
 
 type UserRepository struct {
@@ -51,8 +53,10 @@ func (r *UserRepository) GetAll(page, limit int, name, role, email string) ([]mo
 	return users, int(total), nil
 }
 
-func (r *UserRepository) GetById(id uint) error {
-	return r.db.GetDb().Find(&models.User{}, id).Error
+func (r *UserRepository) GetById(id uuid.UUID) (*models.User, error) {
+	var user models.User
+	err := r.db.GetDb().First(&user, id).Error
+	return &user, err
 }
 
 func (r *UserRepository) Create(user *models.User) error {
@@ -65,4 +69,14 @@ func (r *UserRepository) Update(user *models.User) error {
 
 func (r *UserRepository) Delete(id uint) error {
 	return r.db.GetDb().Delete(&models.User{}, id).Error
+}
+
+func (r *UserRepository) Count() (int64, error) {
+	var count int64
+	err := r.db.GetDb().Model(&models.User{}).Count(&count).Error
+	if err != nil {
+		return count, err
+	}
+
+	return count, nil
 }

@@ -64,10 +64,10 @@ func (r *UserRepository) Create(user *models.User) error {
 }
 
 func (r *UserRepository) Update(user *models.User) error {
-	return r.db.GetDb().Save(user).Error
+	return r.db.GetDb().Save(&user).Error
 }
 
-func (r *UserRepository) Delete(id uint) error {
+func (r *UserRepository) Delete(id uuid.UUID) error {
 	return r.db.GetDb().Delete(&models.User{}, id).Error
 }
 

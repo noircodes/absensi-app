@@ -21,15 +21,15 @@ func (s *UserService) GetUserById(id string) (*models.User, error) {
 	return s.userRepo.GetById(uuid.MustParse(id))
 }
 
-func (s *UserService) CreateUser(userRegister *models.RegisterUserRequest) error {
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(userRegister.Password), bcrypt.DefaultCost)
+func (s *UserService) CreateUser(createUser *models.CreateUserRequest) error {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(createUser.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return errors.New("failed to hash password")
 	}
 
 	user := &models.User{
-		Name:     userRegister.Name,
-		Email:    userRegister.Email,
+		Name:     createUser.Name,
+		Email:    createUser.Email,
 		Password: string(hashedPassword),
 	}
 
@@ -39,4 +39,30 @@ func (s *UserService) CreateUser(userRegister *models.RegisterUserRequest) error
 	}
 
 	return s.userRepo.Create(user)
+}
+
+func (s *UserService) UpdateUser(userId string, userUpdate *models.UpdateUserRequest) error {
+	user, err := s.userRepo.GetById(uuid.MustParse(userId))
+
+	if err != nil {
+		return err
+	}
+
+	if userUpdate.Name != "" {
+		user.Name = userUpdate.Name
+	}
+
+	if userUpdate.Role != "" {
+		user.Role = models.Role(userUpdate.Role)
+	}
+
+	if userUpdate.Status != "" {
+		user.Status = models.UserStatus(userUpdate.Status)
+	}
+
+	return s.userRepo.Update(user)
+}
+
+func (s *UserService) DeleteUser(userId string) error {
+	return s.userRepo.Delete(uuid.MustParse(userId))
 }

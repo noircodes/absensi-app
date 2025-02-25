@@ -35,7 +35,7 @@ type User struct {
 	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
-type RegisterUserRequest struct {
+type CreateUserRequest struct {
 	Name     string `validate:"required"`
 	Email    string `validate:"required, email"`
 	Password string `validate:"required, min=6"`

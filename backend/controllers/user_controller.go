@@ -3,6 +3,7 @@ package controllers
 import (
 	"absensi-app/backend/models"
 	"absensi-app/backend/services"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -60,7 +61,8 @@ func (h *UserController) AdminGetAllUser(c echo.Context) error {
 
 func (h *UserController) AdminCreateUser(c echo.Context) error {
 	var req models.CreateUserRequest
-	if err := c.Bind(req); err != nil {
+	fmt.Print(&req)
+	if err := c.Bind(&req); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"message": "Invalid request"})
 	}
 

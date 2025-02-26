@@ -3,6 +3,7 @@ package repositories
 import (
 	"absensi-app/backend/configs"
 	"absensi-app/backend/models"
+	"fmt"
 
 	"github.com/google/uuid"
 )
@@ -24,7 +25,7 @@ func (r *UserRepository) GetAll(page, limit int, name, role, email string) ([]mo
 		offset = 0
 	}
 
-	query := r.db.GetDb().Preload("Activity").Model(&models.User{}).Select("id", "name", "image", "first_login", "role", "status", "created_at", "updated_at", "Email")
+	query := r.db.GetDb().Model(&models.User{}).Select("id", "name", "image", "role", "status", "created_at", "updated_at", "Email")
 
 	query = query.Where("role NOT LIKE ?", "ROLE_SUPER_ADMIN")
 
@@ -46,6 +47,7 @@ func (r *UserRepository) GetAll(page, limit int, name, role, email string) ([]mo
 	}
 
 	err = query.Limit(limit).Offset(offset).Order("id asc").Find(&users).Error
+	fmt.Print(err)
 	if err != nil {
 		return nil, 0, err
 	}

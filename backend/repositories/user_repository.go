@@ -61,6 +61,12 @@ func (r *UserRepository) GetById(id uuid.UUID) (*models.User, error) {
 	return &user, err
 }
 
+func (r *UserRepository) GetByEmail(email string) (*models.User, error) {
+	var user models.User
+	err := r.db.GetDb().Where("email = ?", email).First(&user).Error
+	return &user, err
+}
+
 func (r *UserRepository) Create(user *models.User) error {
 	return r.db.GetDb().Create(user).Error
 }

@@ -26,7 +26,9 @@ func (h *UserController) GetUserById(c echo.Context) error {
 		return c.String(http.StatusNotFound, err.Error())
 	}
 
-	return c.JSON(http.StatusOK, user)
+	parsedUser := h.userService.ParseUserResponse(user)
+
+	return c.JSON(http.StatusOK, parsedUser)
 }
 
 func (h *UserController) AdminGetAllUser(c echo.Context) error {
@@ -66,7 +68,9 @@ func (h *UserController) AdminCreateUser(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"message": "Invalid request"})
 	}
 
-	h.userService.CreateUser(&req)
+	if err := h.userService.CreateUser(&req); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"message": err.Error()})
+	}
 
 	return c.JSON(http.StatusOK, map[string]string{"message": "Successfully created."})
 }

@@ -22,6 +22,11 @@ func (s *UserService) GetUserById(id string) (*models.User, error) {
 }
 
 func (s *UserService) CreateUser(createUser *models.CreateUserRequest) error {
+	existingUser, err := s.userRepo.GetByEmail(createUser.Email)
+	if err == nil && existingUser != nil {
+		return errors.New("email already exists")
+	}
+
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(createUser.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return errors.New("failed to hash password")
@@ -31,6 +36,7 @@ func (s *UserService) CreateUser(createUser *models.CreateUserRequest) error {
 		Name:     createUser.Name,
 		Email:    createUser.Email,
 		Password: string(hashedPassword),
+		Phone:    createUser.Phone,
 	}
 
 	count, _ := s.userRepo.Count()
@@ -65,4 +71,19 @@ func (s *UserService) UpdateUser(userId string, userUpdate *models.UpdateUserReq
 
 func (s *UserService) DeleteUser(userId string) error {
 	return s.userRepo.Delete(uuid.MustParse(userId))
+}
+
+func (s *UserService) ParseUserResponse(user *models.User) models.UserResponse {
+	return models.UserResponse{
+		ID:        user.ID,
+		Name:      user.Name,
+		Email:     user.Email,
+		Phone:     user.Phone,
+		Code:      user.Code,
+		Image:     user.Image,
+		Role:      user.Role,
+		Status:    user.Status,
+		CreatedAt: user.CreatedAt,
+		UpdatedAt: user.UpdatedAt,
+	}
 }

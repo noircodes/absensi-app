@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -58,6 +59,9 @@ func main() {
 	}
 
 	e := routes.Routing(db)
+
+	e.Use(middleware.CORS())
+
 	err = e.Start(fmt.Sprintf(":%d", 8080))
 	if err != nil {
 		return

@@ -1,17 +1,14 @@
 import { Outlet } from 'react-router'
 import './App.css'
+import { ThemeProvider } from './components/theme-provider'
 
-function App() {
+
+export default function App() {
   console.log("App component rendered")
 
   return (
-    <>
-      <div>
-        <h1>Welcome to the Teams App</h1>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Outlet />
-    </div>
-    </>
+    </ThemeProvider>
   )
 }
-
-export default App

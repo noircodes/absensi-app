@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router"
-import UserDetail from "../component/UserDetail"
+import UserDetail from "../components/UserDetail"
 import { fetchUserById } from "../api"
 import App from "../App"
+import Dashboard from "@/app/dashboard/Dashboard"
 
 const router = createBrowserRouter([
     {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
                     return fetchUserById(params.id)
                 },
                 Component: UserDetail,
+            },
+            {
+                path: '/dashboard',
+                Component: Dashboard
             }
         ]
     }      

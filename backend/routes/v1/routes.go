@@ -12,10 +12,10 @@ type RoutingControllers struct {
 
 func userRoutes(g *echo.Group, c controllers.UserController) {
 	g.GET("/all", c.AdminGetAllUser)
-	g.GET("/:id", c.GetUserById)
-	g.POST("", c.AdminCreateUser)
-	g.PUT("/:id", c.AdminUpdateUser)
-	g.DELETE("/:id", c.DeleteUser)
+	g.GET("/get/:id", c.GetUserById)
+	g.POST("/create", c.AdminCreateUser)
+	g.PUT("/update/:id", c.AdminUpdateUser)
+	g.DELETE("/delete/:id", c.DeleteUser)
 }
 
 func RegisterRoutes(api *echo.Group, s RoutingControllers) {

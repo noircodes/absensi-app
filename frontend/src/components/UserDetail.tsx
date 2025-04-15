@@ -1,6 +1,6 @@
 import { useLoaderData } from 'react-router';
 
-function UserDetail() {
+export default function UserDetail() {
 
   let user = useLoaderData() as { id: string; name: string; }
   console.log(user)
@@ -11,5 +11,3 @@ function UserDetail() {
     </div>
   );
 }
-
-export default UserDetail;

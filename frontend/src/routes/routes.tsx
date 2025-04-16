@@ -1,15 +1,18 @@
-import { createBrowserRouter } from "react-router"
+import { createBrowserRouter, RouterProvider } from "react-router"
 import UserDetail from "../components/UserDetail"
 import { fetchUserById, fetchUsers } from "../api"
-import App from "../App"
-import Dashboard from "@/app/dashboard/Dashboard"
-import UserPaging from "@/components/UserPaging"
+import UserPaging from "../components/UserPaging"
+import { HomePage } from "@/pages/Home.page"
 
 const router = createBrowserRouter([
     {
         path: '/',
-        Component: App,
+        element: <HomePage />,
         children: [
+            {
+                index: true,
+                Component: UserPaging
+            },
             {
                 path: 'user',
                 children: [
@@ -32,12 +35,16 @@ const router = createBrowserRouter([
                     },
                 ]
             },
-            {
-                path: 'dashboard',
-                Component: Dashboard
-            }
+            // {
+            //     path: 'dashboard',
+            //     Component: Dashboard
+            // }
         ]
     }      
 ])
 
-export default router
+export default function Router() {
+    return (
+        <RouterProvider router={router} />
+    )
+}

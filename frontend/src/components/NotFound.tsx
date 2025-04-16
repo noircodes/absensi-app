@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@mantine/core';
 import { useNavigate } from 'react-router';
 
 export default function NotFound() {

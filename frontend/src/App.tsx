@@ -1,14 +1,13 @@
-import { Outlet } from 'react-router'
-import './App.css'
-import { ThemeProvider } from './components/theme-provider'
+import '@mantine/core/styles.css';
 
+import { MantineProvider } from '@mantine/core';
+import { theme } from './theme';
+import Router from './routes/routes';
 
 export default function App() {
-  console.log("App component rendered")
-
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <Outlet />
-    </ThemeProvider>
-  )
+    <MantineProvider theme={theme}>
+      <Router />
+    </MantineProvider>
+  );
 }
